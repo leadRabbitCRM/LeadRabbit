@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     const client = await clientPromise
-    const db = client.db("Ticketing-App")
+    const db = client.db(process.env.DB_NAME)
     const leadData = { ...body, assignedTo: "", status: "New" };
-    const result = await db.collection("Leads").insertOne(leadData);
+    const result = await db.collection("leads").insertOne(leadData);
     if (result.acknowledged){
       console.log("Lead inserted with ID:", result.insertedId);
       return NextResponse.json({ message: "Lead inserted with ID: " + result.insertedId }, { status: 200 });

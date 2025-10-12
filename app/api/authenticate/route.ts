@@ -12,12 +12,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const password = body.password;
     const email = body.email;
-    console.log("first")
     // const saltRounds = 10;
     // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const client = await clientPromise
-    const db = client.db("Ticketing-App")
+    const db = client.db(process.env.DB_NAME)
     let user = await db.collection("users").findOne({ email });
     if (!user) {
       return NextResponse.json({ message: "UserID not found !!" }, { status: 404 });
@@ -34,7 +33,7 @@ export async function POST(req: NextRequest) {
       { expiresIn: "1h" }        // token valid for 1 hour
     );
     const res = NextResponse.json({ success: true, message: "Login successful" }, { status: 200 });
-    res.cookies.set("token", token, {
+    res.cookies.set("appToken", token, {
       httpOnly: true,
       sameSite: 'strict',
       // secure: process.env.NODE_ENV === 'production',
@@ -47,18 +46,6 @@ export async function POST(req: NextRequest) {
       { returnDocument: "after" }            // Options (return updated doc)
     );
     return res;
-    // if (user.mfaEnabled == "false") {
-    //   const secret = speakeasy.generateSecret({
-    //     name: `MyApp ${user.email}`,
-    //   });
-    //   const qr = await QRCode.toDataURL(secret.otpauth_url);
-    //   return NextResponse.json({
-    //     secret: secret.base32,
-    //     otpauth_url: secret.otpauth_url,
-    //     qr,
-    //     mfaSetupRequired: true
-    //   });
-    // }
 
   } catch (err) {
     console.error("Error Retrieving Employee from DB !!", err);

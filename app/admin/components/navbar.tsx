@@ -6,7 +6,7 @@ import { Badge, User, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Div
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = ["Home", "Tickets", "Employees", "Settings"];
+  const menuItems = [{"key":"Home","href":"/admin"}, {"key":"Tickets","href":"/admin/tickets"}, {"key":"Employees","href":"/admin/employees"}, {"key":"Connectors","href":"/admin/connectors"}];
 
   return (
     <header className="bg-white shadow-md">
@@ -32,6 +32,7 @@ export default function Header() {
         <nav className="hidden sm:flex gap-6">
           <a href="/admin" className="hover:text-blue-500">Tickets</a>
           <a href="/admin/employees" className="hover:text-blue-500">Employees</a>
+          <a href="/admin/connectors " className="hover:text-blue-500">Connectors</a>
         </nav>
 
         {/* Right: Avatar dropdown */}
@@ -44,7 +45,7 @@ export default function Header() {
                     isBordered: true,
                     src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
                   }}
-                  name="John Doe"
+                  name
                   className="transition-transform"
                 />
               </Badge>
@@ -93,10 +94,10 @@ export default function Header() {
           {menuItems.map((item, index) => (
             <a
               key={index}
-              href="#"
+              href={item.href}
               className="block hover:text-blue-500"
             >
-              {item}
+              {item.key}
             </a>
           ))}
         </div>

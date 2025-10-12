@@ -12,7 +12,6 @@ export default function LoginPage() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const handleSubmit = async (e) => {
-    console.log("submit")
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
     try {

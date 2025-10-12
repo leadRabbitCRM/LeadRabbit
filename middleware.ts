@@ -3,14 +3,14 @@ import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname  } = request.nextUrl;
 
-  // Allow public access to login page
-  if (pathname === '/login') {
+  const token = request.cookies.get('appToken')?.value;
+
+    // Allow public access to login page
+  if (pathname === '/login' ) {
     return NextResponse.next();
   }
-
-  const token = request.cookies.get('token')?.value;
 
   // If no token and trying to access protected routes
   if (!token) {
@@ -18,13 +18,13 @@ export async function middleware(request: NextRequest) {
     loginUrl.pathname = '/login';
     return NextResponse.redirect(loginUrl);
   }
-
+  
   // If token exists, decode it
   try {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     const { payload } = await jwtVerify(token, secret);
     const role = payload.role;
-
+    
     // If accessing root '/', redirect to /user or /admin
     if (pathname === '/') {
       const redirectUrl = request.nextUrl.clone();
@@ -55,4 +55,4 @@ export async function middleware(request: NextRequest) {
 }
 export const config = {
   matcher: ['/', '/admin/:path*', '/user/:path*', '/login'],
-};
+}

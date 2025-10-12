@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   try {
 
     const client = await clientPromise
-    const db = client.db("Ticketing-App")
+    const db = client.db(process.env.DB_NAME)
 
     const collection =  db.collection("users")
     const leads = await collection.find({ isOnline:true }).toArray();

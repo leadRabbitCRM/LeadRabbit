@@ -1,7 +1,7 @@
 "use client"
 import { BoltSlashIcon, BoltIcon,UserGroupIcon } from '@heroicons/react/24/solid'
 import Widget from "../components/widget";
-import EmpTable from '../components/empTable';
+import EmpTable from './components/empTable';
 
 export default function page() {
   return (

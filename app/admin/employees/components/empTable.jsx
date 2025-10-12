@@ -15,7 +15,9 @@ import {
   Chip,
   User,
   Pagination,
+  useDisclosure,
 } from "@heroui/react";
+import CustomModal from "./CustomModal"
 
 export const columns = [
   {name: "ID", uid: "id", sortable: true},
@@ -358,6 +360,7 @@ export default function EmpTable() {
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -540,7 +543,7 @@ export default function EmpTable() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<PlusIcon />}>
+            <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>
               Add New
             </Button>
           </div>
@@ -601,6 +604,7 @@ export default function EmpTable() {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
+    <>
     <Table
       isHeaderSticky
       aria-label="Example table with custom cells, pagination and sorting"
@@ -636,6 +640,8 @@ export default function EmpTable() {
         )}
       </TableBody>
     </Table>
+    <CustomModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>
+    </>
   );
 }
 

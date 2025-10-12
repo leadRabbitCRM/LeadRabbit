@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
 
     const client = await clientPromise
-    const db = client.db("Ticketing-App")
+    const db = client.db(process.env.DB_NAME)
     let user = await db.collection("users").findOneAndUpdate(
       { email },         // Filter
       { $set: { isOnline: false } },        // Update operation

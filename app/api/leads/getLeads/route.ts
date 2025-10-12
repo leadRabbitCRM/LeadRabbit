@@ -9,9 +9,9 @@ export async function GET(req: NextRequest) {
     const email = Object.fromEntries(query.entries()).email;
 
     const client = await clientPromise
-    const db = client.db("Ticketing-App")
+    const db = client.db(process.env.DB_NAME)
 
-    const collection =  db.collection("Leads")
+    const collection =  db.collection("leads")
     const leads = await collection.find({assignedTo:email}).toArray();
     if (leads){
       return NextResponse.json(leads, { status: 200 });

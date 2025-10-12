@@ -75,7 +75,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en" className={`${poppins.variable} light`} >
       <head />
       <body
-        className="text-foreground antialiased bg-[#e8e8e8] font-poppins"
+        className="text-foreground antialiased bg-[#f7f7f7] font-poppins"
       >
         <AuthProvider>
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
